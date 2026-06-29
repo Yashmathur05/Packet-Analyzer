@@ -1,6 +1,18 @@
 # DPI Engine - Deep Packet Inspection System
 
 
+## Platform Support
+
+This project supports the following platforms:
+
+- ✅ Linux
+- ✅ macOS
+- ✅ Windows (MinGW-w64)
+
+> The original build instructions in this README are intended for Linux/macOS.
+> Windows users can follow the **Windows Setup & Run** section provided at the end of this document.
+
+
 This document explains **everything** about this project - from basic networking concepts to the complete code architecture. After reading this, you should understand exactly how packets flow through the system without needing to read the code.
 
 ---
@@ -1051,3 +1063,88 @@ The key insight is that even HTTPS traffic leaks the destination domain in the T
 If you have questions about any part of this project, the code is well-commented and follows the same flow described in this document. Start with the simple version (`main_working.cpp`) to understand the concepts, then move to the multi-threaded version (`dpi_mt.cpp`) to see how parallelism is added.
 
 Happy learning! 🚀
+
+---
+
+# Windows Setup & Run
+
+> **Note:** The original build instructions in this README are intended for Linux/macOS. This section provides the equivalent steps for running the project on Windows.
+
+## Prerequisites
+
+- Windows 10 / Windows 11
+- MinGW-w64 (g++)
+- Git
+- (Optional) Wireshark (to inspect generated PCAP files)
+
+---
+
+## Running the Project
+
+Open Command Prompt or PowerShell inside the project directory.
+
+### Display Usage
+
+```cmd
+dpi_engine.exe
+```
+
+Expected Output:
+
+```text
+Usage:
+dpi_engine.exe <input.pcap> <output.pcap> [options]
+```
+
+---
+
+### Process the Sample PCAP
+
+```cmd
+dpi_engine.exe test_dpi.pcap filtered.pcap
+```
+
+This command will:
+
+- Read the sample PCAP file.
+- Perform multi-threaded Deep Packet Inspection (DPI).
+- Detect supported applications and protocols.
+- Generate a processed output file named `filtered.pcap`.
+
+---
+
+### Block a Specific Application
+
+```cmd
+dpi_engine.exe test_dpi.pcap blocked.pcap --block-app YouTube
+```
+
+---
+
+### Block a Domain
+
+```cmd
+dpi_engine.exe test_dpi.pcap blocked.pcap --block-domain youtube.com
+```
+
+---
+
+### Block a Source IP
+
+```cmd
+dpi_engine.exe test_dpi.pcap blocked.pcap --block-ip 192.168.1.50
+```
+
+---
+
+## Viewing the Output
+
+Open the generated `filtered.pcap` or `blocked.pcap` using **Wireshark** to inspect the processed packets and verify the filtering results.
+
+---
+
+## Notes
+
+- The repository already includes a pre-built Windows executable (`dpi_engine.exe`).
+- Linux/macOS users should continue following the original build instructions provided earlier in this README.
+- This section is only for Windows users and does not replace the original Linux/macOS documentation.
